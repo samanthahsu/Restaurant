@@ -1,5 +1,7 @@
 package model;
 
 /**/
-public class Table {
+public abstract class Table {
+
+    abstract void hi();
 }
