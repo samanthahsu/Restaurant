@@ -1,5 +1,6 @@
 package ui;
 
+import Persistence.Reader;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,8 +12,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -20,9 +23,11 @@ public class Main extends Application {
     HBox options;
     Button customer;
     Button owner;
+    Stage mainStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        mainStage = primaryStage;
         primaryStage.setTitle("Select Option");
         BorderPane root = new BorderPane();
         options = new HBox();
@@ -78,10 +83,26 @@ public class Main extends Application {
 
     }
 
+    private void initData() {
+    }
+
     private void initMenuBar(MenuBar menuBar) {
         Menu fileMenu = new Menu("File");
         MenuItem menuItemNew = new MenuItem("New...");
+        menuItemNew.setOnAction(event -> {
+
+        });
         MenuItem menuItemOpen = new MenuItem("Open...");
+        menuItemOpen.setOnAction(event -> {
+            Reader reader = new Reader();
+            try {
+                reader.readRestaurantManager(new File(System.getProperty("user.dir") + "\\src\\save"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
         MenuItem menuItemSave = new MenuItem("Save...");
         MenuItem menuItemSaveAs = new MenuItem("Save As...");
         fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
