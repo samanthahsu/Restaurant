@@ -69,6 +69,7 @@ public class RestaurantManager implements Savable {
   
     @Override
     public void save(PrintWriter printWriter) {
+        System.out.println("save run");
         for (int i = 0; i < reservations.size(); i++) {
             List<Reservation> reservationList = reservations.get(i);
             for (int n = 0; n < reservationList.size(); i++) {
@@ -79,7 +80,7 @@ public class RestaurantManager implements Savable {
                     printWriter.print(Reader.DELIMITER1);
                 }
             }
-            if (i == reservations.size()-1) {
+            if (i == reservations.size() - 1) {
                 //empty
             } else {
                 printWriter.print(Reader.DELIMITER2);

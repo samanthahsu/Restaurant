@@ -18,6 +18,8 @@ public class LayoutManager extends Pane {
     final static int OFFSET_X = 100;
     final static int OFFSET_Y = 200;
     int displayTime = 0;
+    boolean isOwner;
+    MouseOffset mouseOffset;
     RestaurantManager restaurantManager;
 
 //    populates pane with 12 tables at set layout places
@@ -70,9 +72,13 @@ public class LayoutManager extends Pane {
         }
     }
 
+    public void setOwner(boolean owner) {
+        isOwner = owner;
+    }
 
     private EventHandler<MouseEvent> onMouseClickedEH = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent event) {
+            if(isOwner) return;
             Node node = (Node) event.getSource();
             System.out.println(node);
 
@@ -89,12 +95,27 @@ public class LayoutManager extends Pane {
         }
     };
 
-    private EventHandler onMouseDrag = new EventHandler() {
-        @Override
-        public void handle(Event event) {
+    private EventHandler<MouseEvent> onMousePressed = new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent event) {
+            if(!isOwner) return;
 
+            Node node = (Node) event.getSource();
+
+            if (node instanceof TableDisplay) {
+                mouseOffset = new MouseOffset(node.getLayoutX() - event.getSceneX(), node.getLayoutY() - event.getSceneY());
+                System.out.println("mouse pressed in table");
+            }
         }
     };
 
+    class MouseOffset {
+        double x;
+        double y;
+
+        MouseOffset(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
 }
