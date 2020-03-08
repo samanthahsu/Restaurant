@@ -20,7 +20,9 @@ public class CustomerStage extends Stage {
 
         listOfTimes = new ListView<>();
         times = FXCollections.observableArrayList();
-        times.addAll(10,11,12);
+        for (int i = 0; i < 24; i++) {
+            times.add(i);
+        }
         listOfTimes.setPrefSize(100,275);
         listOfTimes.setItems(times);
 

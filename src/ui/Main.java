@@ -1,17 +1,16 @@
 package ui;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import java.awt.*;
 import java.io.FileInputStream;
@@ -24,6 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Select Option");
+        BorderPane root = new BorderPane();
         options = new HBox();
         FileInputStream input = new FileInputStream("111.jfif");
         Image img = new Image(input);
@@ -38,6 +38,10 @@ public class Main extends Application {
 
         // set background
         options.setBackground(background);
+
+        MenuBar menuBar = new MenuBar();
+        initMenuBar(menuBar);
+
 
         customer = new Button("Customer");
         customer.setMinSize(200,150);
@@ -64,10 +68,23 @@ public class Main extends Application {
             }
         });
 
-        primaryStage.setScene(new Scene(options, 1000, 800));
+        root.setCenter(options);
+        root.setTop(menuBar);
+
+        primaryStage.setScene(new Scene(root, 1000, 800));
 
         primaryStage.show();
 
+    }
+
+    private void initMenuBar(MenuBar menuBar) {
+        Menu fileMenu = new Menu("File");
+        MenuItem menuItemNew = new MenuItem("New...");
+        MenuItem menuItemOpen = new MenuItem("Open...");
+        MenuItem menuItemSave = new MenuItem("Save...");
+        MenuItem menuItemSaveAs = new MenuItem("Save As...");
+        fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
+        menuBar.getMenus().addAll(fileMenu);
     }
 
     public static void main(String[] args) {
