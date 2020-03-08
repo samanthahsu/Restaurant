@@ -1,8 +1,8 @@
 package model;
 
 public class TwoSeater extends Table {
-    private final int width = 30;
-    private final int height = 50;
+    private final int width = 80;
+    private final int height = 100;
 
     //EFFECTS: constructs a new two seater table with given x and y coordinate
     public TwoSeater(int newX, int newY) {
