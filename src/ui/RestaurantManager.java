@@ -1,5 +1,6 @@
 package ui;
 
+import Persistence.Reader;
 import Persistence.Savable;
 import model.Customer;
 import model.Reservation;
@@ -58,15 +59,27 @@ public class RestaurantManager implements Savable {
          return null;
     }
 
+    public void setReservation(Integer time, List<Reservation> reservationList) {
+         reservations.put(time, reservationList);
+    }
+
   
     @Override
     public void save(PrintWriter printWriter) {
         for (int i = 0; i < reservations.size(); i++) {
-            printWriter.print(reservations.get(i));
+            List<Reservation> reservationList = reservations.get(i);
+            for (int n = 0; n < reservationList.size(); i++) {
+                printWriter.print(reservationList.get(i));
+                if (i == reservationList.size()-1) {
+                    //empty
+                } else {
+                    printWriter.print(Reader.DELIMITER1);
+                }
+            }
             if (i == reservations.size()-1) {
                 //empty
             } else {
-                printWriter.print(Reader.DELIMITER);
+                printWriter.print(Reader.DELIMITER2);
             }
         }
     }
