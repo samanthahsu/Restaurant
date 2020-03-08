@@ -80,7 +80,19 @@ public class ReservationWindow extends Stage {
                         close();
                         Customer c =new Customer(name, phone);
                         r.addReservation(h, c);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("error");
+                        alert.setHeaderText("wrong no. of hours entered");
+                        alert.setContentText("enter a value less than 3");
+                        alert.showAndWait();
                     }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("error");
+                    alert.setHeaderText("wrong no. seats for table entered");
+                    alert.setContentText("either 2 seater or 4 seater is available.");
+                    alert.showAndWait();
                 }
             }
         });
