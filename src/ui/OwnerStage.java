@@ -3,25 +3,31 @@ package ui;
 import Persistence.Reader;
 import Persistence.Writer;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Customer;
-import ui.ReservationWindow;
+import model.Reservation;
+import ui.RestaurantManager;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class OwnerStage extends Stage {
@@ -119,13 +125,18 @@ public class OwnerStage extends Stage {
         MenuItem viewInfo = new MenuItem("View Info...");
         viewInfo.setOnAction(event -> {
             try {
-            ReservationWindow r;
-            Customer c;
+                StackPane root = new StackPane();
+                TableView table = new TableView();
+                table.setItems((ObservableList) rm.reservations);
+                root.getChildren().add(table);
+                Scene scene = new Scene(root, 300, 250);
+                setTitle("Details");
+                setScene(scene);
+                show();
             } catch (Exception e){
                 e.printStackTrace();
             }
-        }
-        )
+        });
     }
 
 }
