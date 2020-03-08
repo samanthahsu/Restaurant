@@ -24,6 +24,7 @@ public class Main extends Application {
     Button customer;
     Button owner;
     Stage mainStage;
+    RestaurantManager restaurantManager;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -96,7 +97,7 @@ public class Main extends Application {
         menuItemOpen.setOnAction(event -> {
             Reader reader = new Reader();
             try {
-                reader.readRestaurantManager(new File(System.getProperty("user.dir") + "\\src\\save"));
+                restaurantManager = Reader.readRestaurantManager(new File(System.getProperty("user.dir") + "\\src\\save"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
