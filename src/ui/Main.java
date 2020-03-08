@@ -8,12 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import java.awt.*;
+
 import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Main extends Application {
     HBox options;
@@ -21,23 +22,23 @@ public class Main extends Application {
     Button owner;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Select Option");
         BorderPane root = new BorderPane();
         options = new HBox();
-//        FileInputStream input = new FileInputStream("111.jfif");
-//        Image img = new Image(input);
-//        BackgroundImage backgroundimage = new BackgroundImage(image,
-//                BackgroundRepeat.NO_REPEAT,
-//                BackgroundRepeat.NO_REPEAT,
-//                BackgroundPosition.DEFAULT,
-//                BackgroundSize.DEFAULT);
-//
-//        // create Background
-//        Background background = new Background(backgroundimage);
-//
-//        // set background
-//        options.setBackground(background);
+            FileInputStream input = new FileInputStream(System.getProperty("user.dir") + "\\src\\111.jfif");
+            Image img = new Image(input);
+            BackgroundImage backgroundimage = new BackgroundImage(img,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            // create Background
+            Background background = new Background(backgroundimage);
+
+            // set background
+            options.setBackground(background);
+
 
         MenuBar menuBar = new MenuBar();
         initMenuBar(menuBar);
