@@ -3,7 +3,9 @@ package ui;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 import model.Customer;
+import model.Reservation;
 import model.Table;
 
 import java.util.HashMap;
@@ -16,24 +18,28 @@ public class RestaurantManager {
 
 
     /** integers where 0=12am and list contains tables reserved */
-    HashMap<Integer, List<Table>> reservations;
+    HashMap<Integer, List<Reservation>> reservations;
     Pane pane;
 
 //    initialize variable
     RestaurantManager() {
-
+        reservations = new HashMap<>();
     }
 
 //   corresponding table at time is added to the reservations hashmap
 //    updates ui
-    void addReservation(int time, Customer customer){}
+    void addReservation(int time, Table table, Customer customer) {
+        List<Reservation> reservs = reservations.get(time);
+        Reservation r = new Reservation(table, customer);
+        reservations.get(time).add(r);
+    }
 
 //    removes corresponding reservations
 //    updates ui
-    void removeReservation(int time, Customer customer){}
-
-    public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
-        return null;
+    void removeReservation(int time, Table table, Customer customer) {
+        List<Reservation> reservs = reservations.get(time);
+        Reservation r = new Reservation(table, customer);
+        reservations.get(time).remove(r);
     }
 
 
