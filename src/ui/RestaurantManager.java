@@ -1,9 +1,5 @@
 package ui;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 import model.Customer;
 import model.Reservation;
 import model.Table;

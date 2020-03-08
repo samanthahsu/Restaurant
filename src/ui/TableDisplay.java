@@ -16,6 +16,7 @@ public class TableDisplay extends Rectangle {
     TableDisplay(Table table) {
         setWidth(WIDTH);
         setHeight(HEIGHT);
+        free();
         this.table = table;
     }
 
@@ -24,11 +25,13 @@ public class TableDisplay extends Rectangle {
         setFill(color);
     }
 
-    public void reserve) {
+    public void reserve() {
+        setFill(Color.RED);
         this.reserved = true;
     }
 
     public void free() {
+        setFill(Color.GREEN);
         this.reserved = false;
     }
 }
