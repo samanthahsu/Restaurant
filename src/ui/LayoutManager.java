@@ -1,6 +1,6 @@
 package ui;
 
-import javafx.event.Event;
+
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import model.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**main pane that displays all the tables
@@ -24,23 +25,43 @@ public class LayoutManager extends Pane {
 
 //    populates pane with 12 tables at set layout places
     LayoutManager(RestaurantManager restaurantManager) {
-        for (int i = 0; i < 6; i++) {
-            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X * i, OFFSET_Y));
-            getChildren().add(new_td);
-            new_td.setTranslateX(new_td.getTable().getX());
-            new_td.setTranslateY(new_td.getTable().getY());
-
-            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
-        }
-        for (int i = 0; i < 6; i++) {
-            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X * i, OFFSET_Y * 2));
-            getChildren().add(new_td);
-            new_td.setTranslateX(new_td.getTable().getX());
-            new_td.setTranslateY(new_td.getTable().getY());
-            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
-        }
+//        for (int i = 0; i < 6; i++) {
+//            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X * i, OFFSET_Y));
+//            getChildren().add(new_td);
+//            new_td.setTranslateX(new_td.getTable().getX());
+//            new_td.setTranslateY(new_td.getTable().getY());
+//
+//            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
+//        }
+//        for (int i = 0; i < 6; i++) {
+//            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X * i, OFFSET_Y * 2));
+//            getChildren().add(new_td);
+//            new_td.setTranslateX(new_td.getTable().getX());
+//            new_td.setTranslateY(new_td.getTable().getY());
+//            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
+//        }
         this.restaurantManager = restaurantManager;
 
+    }
+
+    public void addTable(int seat) {
+        if (seat == 2) {
+            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X, OFFSET_Y));
+            getChildren().add(new_td);
+            new_td.setTranslateX(new_td.getTable().getX());
+            new_td.setTranslateY(new_td.getTable().getY());
+
+        } else if (seat == 4) {
+            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X, OFFSET_Y));
+            getChildren().add(new_td);
+            new_td.setTranslateX(new_td.getTable().getX());
+            new_td.setTranslateY(new_td.getTable().getY());
+
+
+            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
+            new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
+            new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+        }
     }
 
     /**
@@ -76,7 +97,8 @@ public class LayoutManager extends Pane {
         isOwner = owner;
     }
 
-    private EventHandler<MouseEvent> onMouseClickedEH = new EventHandler<MouseEvent>() {
+
+    private EventHandler<MouseEvent> onMouseClicked = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent event) {
             if(isOwner) return;
             Node node = (Node) event.getSource();
@@ -102,19 +124,44 @@ public class LayoutManager extends Pane {
             Node node = (Node) event.getSource();
 
             if (node instanceof TableDisplay) {
-                mouseOffset = new MouseOffset(node.getLayoutX() - event.getSceneX(), node.getLayoutY() - event.getSceneY());
+                mouseOffset = new MouseOffset(
+                        event.getSceneX(), event.getSceneY(),
+                        node.getTranslateX() - event.getSceneX(),
+                        node.getTranslateY() - event.getSceneY());
                 System.out.println("mouse pressed in table");
+                System.out.println(mouseOffset.translateX);
             }
         }
     };
 
-    class MouseOffset {
-        double x;
-        double y;
+    private EventHandler<MouseEvent> onMouseDragged = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if(!isOwner) return;
 
-        MouseOffset(double x, double y) {
-            this.x = x;
-            this.y = y;
+            Node node = (Node) event.getSource();
+
+            if (node instanceof TableDisplay) {
+                double x = event.getSceneX() + mouseOffset.translateX;
+                double y = event.getSceneY() + mouseOffset.translateY;
+                node.setTranslateX(x);
+                node.setTranslateY(y);
+            }
+        }
+    };
+
+    static class MouseOffset {
+        double mouseOrigX;
+        double mouseOrigY;
+
+        double translateX;
+        double translateY;
+
+        MouseOffset(double mouseOrigX, double mouseOrigY, double translateX, double translateY) {
+            this.mouseOrigX = mouseOrigX;
+            this.mouseOrigY = mouseOrigY;
+            this.translateX = translateX;
+            this.translateY = translateY;
         }
     }
 
