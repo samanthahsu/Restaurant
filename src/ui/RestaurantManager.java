@@ -3,8 +3,10 @@ package ui;
 import model.Customer;
 import model.Reservation;
 import model.Table;
+import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RestaurantManager {
@@ -13,7 +15,10 @@ public class RestaurantManager {
 
 //    initialize variable
      public RestaurantManager() {
-        reservations = new HashMap<>();
+         reservations = new HashMap<>();
+         for (int i = 0; i < 24; i++) {
+             reservations.put(i, new LinkedList<Reservation>());
+         }
     }
 
 //   corresponding table at time is added to the reservations hashmap
