@@ -66,7 +66,7 @@ public class OwnerStage extends Stage {
         });
 
 
-        setScene(new Scene(root, 1000, 800));
+        setScene(new Scene(root, 800, 800));
         show();
 
         setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -113,7 +113,7 @@ public class OwnerStage extends Stage {
             }
         });
 
-        fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, viewInfo);
+        fileMenu.getItems().addAll(menuItemOpen, menuItemSave, viewInfo);
         menuBar.getMenus().addAll(fileMenu);
 
     }

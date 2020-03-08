@@ -125,6 +125,7 @@ public class LayoutManager extends Pane {
             System.out.println(node);
 
             if (node instanceof TableDisplay) {
+                if (!((TableDisplay) node).reserved)
                 try {
                     new ui.ReservationWindow(displayTime, restaurantManager, (TableDisplay) node);
                 } catch (IOException e) {
