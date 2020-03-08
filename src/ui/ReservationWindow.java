@@ -76,9 +76,12 @@ public class ReservationWindow extends Stage {
                 int s1 = Integer.parseInt(s);
                 if (s1 == 2 || s1 == 4) {
                     if (h < 3) {
-                        close();
                         Customer customer =new Customer(name, phone);
                         restaurantManager.addReservation(reserveTime, tableDisplay, customer);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setContentText("Table reserved!");
+                        alert.showAndWait();
+                        close();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("error");
