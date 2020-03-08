@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class OwnerStage extends Stage {
-    static final File FILE = new File(System.getProperty("user.dir") + "\\src\\save");
+    static final String FILE_NAME = System.getProperty("user.dir") + "\\src\\save";
     LayoutManager lm;
     RestaurantManager rm;
     AnchorPane button;
@@ -81,25 +81,17 @@ public class OwnerStage extends Stage {
         Menu fileMenu = new Menu("File");
         MenuItem menuItemNew = new MenuItem("New...");
         menuItemNew.setOnAction(event -> {
-
-
         });
         MenuItem menuItemOpen = new MenuItem("Open...");
         menuItemOpen.setOnAction(event -> {
-//            Reader reader = new Reader();
-//            try {
-//                rm = Reader.readRestaurantManager(FILE);
-//                System.out.println(rm);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            rm = RestaurantManager.load(FILE_NAME);
         });
 
 
         MenuItem menuItemSave = new MenuItem("Save...");
         menuItemSave.setOnAction(event -> {
+            RestaurantManager.save(rm, FILE_NAME);
         });
-        MenuItem menuItemSaveAs = new MenuItem("Save As...");
         MenuItem viewInfo = new MenuItem("View Info...");
         viewInfo.setOnAction(event -> {
             try {
@@ -107,7 +99,7 @@ public class OwnerStage extends Stage {
                 TableView table = new TableView();
                 List list = new ArrayList();
                 list.add(rm.reservations);
-                table.setItems(FXCollections.observableList(list) );
+                table.setItems(FXCollections.observableList(list));
                 root.getChildren().add(table);
                 Scene scene = new Scene(root, 300, 250);
                 setTitle("Details");
@@ -120,7 +112,6 @@ public class OwnerStage extends Stage {
 
         fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, viewInfo);
         menuBar.getMenus().addAll(fileMenu);
-
 
     }
 

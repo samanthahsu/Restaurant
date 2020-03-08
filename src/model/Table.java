@@ -1,7 +1,9 @@
 package model;
 
+import java.io.Serializable;
+
 /**/
-public abstract class Table {
+public abstract class Table implements Serializable {
     protected int seats;
     protected int x;
     protected int y;

@@ -1,19 +1,13 @@
 package ui;
 
-
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import model.Customer;
 import model.Reservation;
 import model.Table;
 
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,8 +76,15 @@ public class RestaurantManager implements Serializable {
 
 
     public static void save(Serializable RestaurantManager, String fileName) {
-         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName)))) {
+        System.out.println("save");
+         try  {
+             File file = new File(System.getProperty("user.dir") + "\\src\\save");
+             OutputStream fileOutputStream = new FileOutputStream(file);
+             ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream);
+             System.out.println("oos");
              oos.writeObject(RestaurantManager);
+             System.out.println("writeObject");
+             oos.close();
          } catch (IOException e) {
              System.out.println("IOException caught");
          }
@@ -91,7 +92,10 @@ public class RestaurantManager implements Serializable {
 
     public static RestaurantManager load(String fileName) {
          try {
-             ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(fileName)));
+             File file = new File(System.getProperty("user.dir") + "\\src\\save");
+             FileInputStream fos = new FileInputStream(file);
+             ObjectInputStream ois = new ObjectInputStream(fos);
+             System.out.println("loaded");
              return (RestaurantManager) ois.readObject();
          } catch (IOException e) {
              System.out.println("IOException caught");
