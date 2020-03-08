@@ -13,6 +13,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import java.awt.*;
+import java.io.FileInputStream;
 
 public class Main extends Application {
     HBox options;
@@ -23,6 +25,19 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Select Option");
         options = new HBox();
+        FileInputStream input = new FileInputStream("111.jfif");
+        Image img = new Image(input);
+        BackgroundImage backgroundimage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        // create Background
+        Background background = new Background(backgroundimage);
+
+        // set background
+        options.setBackground(background);
 
         customer = new Button("Customer");
         customer.setMinSize(200,150);
