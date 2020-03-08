@@ -27,8 +27,9 @@ public class CustomerStage extends Stage {
         listOfTimes.setPrefSize(100,275);
         listOfTimes.setItems(times);
 
-        restaurantManager = new RestaurantManager();
+        restaurantManager = RestaurantManager.load("yes");
         layoutManager = new LayoutManager(restaurantManager);
+        layoutManager.update();
 
         listOfTimes.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

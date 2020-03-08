@@ -85,6 +85,9 @@ public class OwnerStage extends Stage {
         MenuItem menuItemOpen = new MenuItem("Open...");
         menuItemOpen.setOnAction(event -> {
             rm = RestaurantManager.load(FILE_NAME);
+
+            lm.restaurantManager = rm;
+            lm.update();
         });
 
 

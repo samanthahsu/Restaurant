@@ -7,9 +7,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.FourSeater;
 import model.Reservation;
+import model.Table;
 import model.TwoSeater;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**main pane that displays all the tables
@@ -24,25 +26,33 @@ public class LayoutManager extends Pane {
     MouseOffset mouseOffset;
     RestaurantManager restaurantManager;
 
-//    populates pane with 12 tables at set layout places
+//    sets all the tables based on restaurant manager
     LayoutManager(RestaurantManager restaurantManager) {
-//        for (int i = 0; i < 6; i++) {
-//            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X * i, OFFSET_Y));
-//            getChildren().add(new_td);
-//            new_td.setTranslateX(new_td.getTable().getX());
-//            new_td.setTranslateY(new_td.getTable().getY());
-//
-//            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
-//        }
-//        for (int i = 0; i < 6; i++) {
-//            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X * i, OFFSET_Y * 2));
-//            getChildren().add(new_td);
-//            new_td.setTranslateX(new_td.getTable().getX());
-//            new_td.setTranslateY(new_td.getTable().getY());
-//            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
-//        }
         this.restaurantManager = restaurantManager;
+    }
 
+    public void update() {
+        List<Node> saveNode = new ArrayList<>();
+        for(Node node : getChildren()) {
+            if(!(node instanceof TableDisplay)) {
+                saveNode.add(node);
+            }
+        }
+        getChildren().clear();
+        getChildren().addAll(saveNode);
+
+
+        for(Table table : restaurantManager.allTables) {
+            TableDisplay new_td = new TableDisplay(table);
+            new_td.setTranslateX(table.getX());
+            new_td.setTranslateY(table.getY());
+            getChildren().add(new_td);
+
+            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
+            new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
+            new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+            new_td.addEventFilter(MouseEvent.MOUSE_RELEASED, onMouseReleased);
+        }
     }
 
     public void addTable(int seat) {
@@ -55,6 +65,7 @@ public class LayoutManager extends Pane {
             new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
             new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
             new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+            new_td.addEventFilter(MouseEvent.MOUSE_RELEASED, onMouseReleased);
             restaurantManager.addTable(new_td.getTable());
 
         } else if (seat == 4) {
@@ -66,6 +77,7 @@ public class LayoutManager extends Pane {
             new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
             new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
             new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+            new_td.addEventFilter(MouseEvent.MOUSE_RELEASED, onMouseReleased);
             restaurantManager.addTable(new_td.getTable());
         }
 
@@ -154,6 +166,20 @@ public class LayoutManager extends Pane {
                 double y = event.getSceneY() + mouseOffset.translateY;
                 node.setTranslateX(x);
                 node.setTranslateY(y);
+            }
+        }
+    };
+
+    private EventHandler<MouseEvent> onMouseReleased = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if (!isOwner) return;
+            Node node = (Node) event.getSource();
+
+            if (node instanceof TableDisplay) {
+                Table currTable = ((TableDisplay) node).getTable();
+                currTable.setPosition(node.getTranslateX(), node.getTranslateY());
+                System.out.println(currTable.getX());
             }
         }
     };

@@ -5,19 +5,19 @@ import java.io.Serializable;
 /**/
 public abstract class Table implements Serializable {
     protected int seats;
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
 
-    public void setPosition(int newX, int newY) {
+    public void setPosition(double newX, double newY) {
         this.x = newX;
         this.y = newY;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
