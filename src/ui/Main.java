@@ -43,7 +43,7 @@ public class Main extends Application {
 
             // set background
             options.setBackground(background);
-
+            options.setStyle("-fx-background-size: 1024 768");
 
         MenuBar menuBar = new MenuBar();
         initMenuBar(menuBar);
@@ -108,7 +108,6 @@ public class Main extends Application {
         fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
         menuBar.getMenus().addAll(fileMenu);
     }
-
     public static void main(String[] args) {
         launch(args);
     }
