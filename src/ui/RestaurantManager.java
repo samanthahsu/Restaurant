@@ -1,16 +1,18 @@
 package ui;
 
+import Persistence.Reader;
+import Persistence.Savable;
 import model.Customer;
 import model.Reservation;
 import model.Table;
 import sun.awt.image.ImageWatched;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RestaurantManager {
-
+public class RestaurantManager implements Savable {
     HashMap<Integer, List<Reservation>> reservations;
 
 //    initialize variable
@@ -45,12 +47,15 @@ public class RestaurantManager {
         }
     }
 
-
     public List<Reservation> getReservations(Integer time) {
          if (time <= 24) {
              return reservations.get(time);
          }
          return null;
     }
-
+  
+      @Override
+    public void save(PrintWriter printWriter) {
+        printWriter.print(reservations);
+    }
 }
