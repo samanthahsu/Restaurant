@@ -1,16 +1,16 @@
 package ui;
 
+import Persistence.Reader;
+import Persistence.Savable;
 import model.Customer;
 import model.Reservation;
 import model.Table;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
-public class RestaurantManager {
-
-    /** list of all tables*/
-    List<Table> allTables;
+public class RestaurantManager implements Savable {
 
 
     /** integers where 0=12am and list contains tables reserved */
@@ -38,4 +38,8 @@ public class RestaurantManager {
     }
 
 
+    @Override
+    public void save(PrintWriter printWriter) {
+        printWriter.print(reservations);
+    }
 }
