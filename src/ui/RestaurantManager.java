@@ -2,8 +2,6 @@ package ui;
 
 import Persistence.Reader;
 import Persistence.Savable;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import model.Customer;
 import model.Reservation;
 import model.Table;
@@ -12,7 +10,6 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
 
 public class RestaurantManager implements Savable {
 
