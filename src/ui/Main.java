@@ -86,7 +86,6 @@ public class Main extends Application {
         fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
         menuBar.getMenus().addAll(fileMenu);
     }
-
     public static void main(String[] args) {
         launch(args);
     }
