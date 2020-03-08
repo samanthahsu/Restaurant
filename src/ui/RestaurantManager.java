@@ -29,24 +29,27 @@ public class RestaurantManager implements Savable {
              List<Reservation> reservs = reservations.get(time);
              if (!reservs.isEmpty()) {
                  for (Reservation r : reservs) {
-                     if (r.getTable().equals(tableDisplay)) {
+                     if (r.getTable().equals(tableDisplay.getTable())) {
                          contains = true;
+                         break;
                      }
                  }
              }
              if (contains.equals(false)) {
                  reservations.get(time).add(new Reservation(tableDisplay.getTable(), customer));
+                 tableDisplay.reserve();
              }
          }
     }
 
 //    removes corresponding reservations
 //    updates ui
-    public void removeReservation(Integer time, Table table) {
+    public void removeReservation(Integer time, TableDisplay tableDisplay) {
         List<Reservation> reservs = reservations.get(time);
         for (Reservation r: reservs) {
-            if (r.getTable().equals(table)) {
+            if (r.getTable().equals(tableDisplay.getTable())) {
                 reservations.get(time).remove(r);
+                tableDisplay.free();
             }
         }
     }
@@ -66,7 +69,7 @@ public class RestaurantManager implements Savable {
             if (i == reservations.size()-1) {
                 //empty
             } else {
-                printWriter.print(Reader.DELIMITER);
+//                printWriter.print(Reader.DELIMITER);
             }
         }
     }

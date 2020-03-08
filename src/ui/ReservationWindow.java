@@ -1,30 +1,28 @@
 package main;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Customer;
+import ui.RestaurantManager;
+import ui.TableDisplay;
+
 import java.io.IOException;
-import model.customer;
 
 public class ReservationWindow extends Stage {
-    RestaurantManager r = new RestaurantManager();
 
-    public ReservationWindow() throws IOException {
+    public ReservationWindow(final Integer reservedTime, final RestaurantManager restaurantManager, final TableDisplay tableDisplay) throws IOException {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -39,25 +37,25 @@ public class ReservationWindow extends Stage {
         Label userName = new Label("Name:");
         grid.add(userName, 0, 1);
 
-        TextField userTextField = new TextField();
+        final TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
         Label pn = new Label("Phonenumber:");
         grid.add(pn, 0, 2);
 
-        TextField pnBox = new TextField();
+        final TextField pnBox = new TextField();
         grid.add(pnBox, 1, 2);
 
         Label seats = new Label("seat number:");
         grid.add(seats, 0, 3);
 
-        TextField seat = new TextField();
+        final TextField seat = new TextField();
         grid.add(seat, 1, 3);
 
-        Label time = new Label("seating time:");
+        final Label time = new Label("seating time:");
         grid.add(time, 0, 4);
 
-        TextField timee = new TextField();
+        final TextField timee = new TextField();
         grid.add(timee, 1, 4);
 
         Button btn = new Button("submit");
@@ -77,9 +75,9 @@ public class ReservationWindow extends Stage {
                 int s1 = Integer.parseInt(s);
                 if (s1 == 2 || s1 == 4) {
                     if (h < 3) {
+                        Customer newCustomer = new Customer(name, phone);
+                        restaurantManager.addReservation(reservedTime, tableDisplay, newCustomer);
                         close();
-                        Customer c =new Customer(name, phone);
-                        r.addReservation(h, c);
                     }
                 }
             }
