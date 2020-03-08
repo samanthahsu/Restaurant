@@ -77,6 +77,7 @@ public class LayoutManager extends Pane {
         }
     }
 
+
     private EventHandler<MouseEvent> onMouseClickedEH = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent event) {
             Node node = (Node) event.getSource();

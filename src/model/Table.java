@@ -19,5 +19,9 @@ public abstract class Table {
         return y;
     }
 
+    public abstract int getHeight();
+
+    public abstract int getWidth();
+
 }
 

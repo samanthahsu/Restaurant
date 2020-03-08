@@ -4,47 +4,55 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    ListView<Integer> listOfTimes;
-    ObservableList<Integer> times;
-    LayoutManager layoutManager;
-    RestaurantManager restaurantManager;
+    HBox options;
+    Button customer;
+    Button owner;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        primaryStage.setTitle("Restaurant Reservation");
+        primaryStage.setTitle("Select Option");
+        options = new HBox();
 
-        listOfTimes = new ListView<>();
-        times = FXCollections.observableArrayList();
-        times.addAll(10, 11, 12);
-        listOfTimes.setPrefSize(100,275);
-        listOfTimes.setItems(times);
+        customer = new Button("Customer");
+        customer.setMinSize(200,150);
+        customer.setStyle("-fx-font-size: xx-large");
 
-        restaurantManager = new RestaurantManager();
-        layoutManager = new LayoutManager(restaurantManager);
+        owner = new Button("Owner");
+        owner.setMinSize(200, 150);
+        owner.setStyle("-fx-font-size: xx-large");
 
-        listOfTimes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        options.getChildren().addAll(customer,owner);
+        options.setAlignment(Pos.CENTER);
+
+        customer.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Integer time = listOfTimes.getSelectionModel().getSelectedItems().get(0);
-                layoutManager.displayAtTime(time);
-                System.out.println(time);
+                new CustomerStage();
             }
         });
 
-        BorderPane bPane = new BorderPane();
-        bPane.setLeft(listOfTimes);
-        bPane.setCenter(layoutManager);
+        owner.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                new OwnerStage();
+            }
+        });
 
+        primaryStage.setScene(new Scene(options, 1000, 800));
 
-        primaryStage.setScene(new Scene(bPane, 1000, 800));
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {
