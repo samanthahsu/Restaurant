@@ -26,7 +26,7 @@ public class Main extends Application {
 
         listOfTimes = new ListView<>();
         times = FXCollections.observableArrayList();
-        times.addAll(10,11,12);
+        times.addAll(10, 11, 12);
         listOfTimes.setPrefSize(100,275);
         listOfTimes.setItems(times);
 
@@ -36,7 +36,9 @@ public class Main extends Application {
         listOfTimes.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                layoutManager.displayAtTime(listOfTimes.getEditingIndex());
+                Integer time = listOfTimes.getSelectionModel().getSelectedItems().get(0);
+                layoutManager.displayAtTime(time);
+                System.out.println(time);
             }
         });
 

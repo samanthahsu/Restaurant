@@ -3,7 +3,6 @@ package ui;
 import model.Customer;
 import model.Reservation;
 import model.Table;
-import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -23,26 +22,30 @@ public class RestaurantManager {
 
 //   corresponding table at time is added to the reservations hashmap
 //    updates ui
-    public void addReservation(Integer time, Table table, Customer customer) {
+    public void addReservation(Integer time, TableDisplay table, Customer customer) {
          if (time <= 24) {
              List<Reservation> reservs = reservations.get(time);
              for (Reservation r: reservs) {
                  if (!r.getTable().equals(table)) {
-                     reservations.get(time).add(new Reservation(table, customer));
+                     reservations.get(time).add(new Reservation(table.getTable(), customer));
+                     break;
                  }
              }
          }
+         table.reserve();
     }
 
 //    removes corresponding reservations
 //    updates ui
-    public void removeReservation(Integer time, Table table, Customer customer) {
+    public void removeReservation(Integer time, TableDisplay table, Customer customer) {
         List<Reservation> reservs = reservations.get(time);
         for (Reservation r: reservs) {
             if (r.getCustomer().equals(customer)) {
                 reservations.get(time).remove(r);
+                break;
             }
         }
+        table.free();
     }
 
 

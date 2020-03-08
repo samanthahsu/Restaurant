@@ -10,4 +10,14 @@ public abstract class Table {
         this.x = newX; 
         this.y = newY;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
 }
+
