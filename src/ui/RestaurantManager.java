@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class RestaurantManager implements Savable {
+
+    List<Table> allTables;
     HashMap<Integer, List<Reservation>> reservations;
 
 //    initialize variable
