@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -27,7 +28,9 @@ public class OwnerStage extends Stage {
     LayoutManager lm;
     RestaurantManager rm;
     AnchorPane button;
-    Button addTable;
+    VBox addTable;
+    Button TS;
+    Button FS;
 
     public OwnerStage() {
         super();
@@ -39,7 +42,10 @@ public class OwnerStage extends Stage {
         lm.setOwner(true);
 
         button = new AnchorPane();
-        addTable = new Button("Add Table");
+        addTable = new VBox();
+        TS = new Button("2 Seats");
+        FS = new Button("4 Seats");
+        addTable.getChildren().addAll(TS, FS);
 
         button.getChildren().addAll(addTable);
         lm.getChildren().addAll(button);
@@ -48,6 +54,20 @@ public class OwnerStage extends Stage {
         initMenuBar(menuBar);
         root.setTop(menuBar);
         root.setCenter(lm);
+
+        TS.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                lm.addTable(2);
+            }
+        });
+
+        FS.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                lm.addTable(4);
+            }
+        });
 
 
         setScene(new Scene(root, 1000, 800));

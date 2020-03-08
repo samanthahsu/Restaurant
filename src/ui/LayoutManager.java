@@ -1,5 +1,6 @@
 package ui;
 
+import Persistence.Savable;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -8,6 +9,7 @@ import javafx.scene.layout.Pane;
 import model.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**main pane that displays all the tables
@@ -24,23 +26,37 @@ public class LayoutManager extends Pane {
 
 //    populates pane with 12 tables at set layout places
     LayoutManager(RestaurantManager restaurantManager) {
-        for (int i = 0; i < 6; i++) {
-            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X * i, OFFSET_Y));
-            getChildren().add(new_td);
-            new_td.setTranslateX(new_td.getTable().getX());
-            new_td.setTranslateY(new_td.getTable().getY());
-
-            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
-        }
-        for (int i = 0; i < 6; i++) {
-            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X * i, OFFSET_Y * 2));
-            getChildren().add(new_td);
-            new_td.setTranslateX(new_td.getTable().getX());
-            new_td.setTranslateY(new_td.getTable().getY());
-            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
-        }
+//        for (int i = 0; i < 6; i++) {
+//            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X * i, OFFSET_Y));
+//            getChildren().add(new_td);
+//            new_td.setTranslateX(new_td.getTable().getX());
+//            new_td.setTranslateY(new_td.getTable().getY());
+//
+//            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
+//        }
+//        for (int i = 0; i < 6; i++) {
+//            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X * i, OFFSET_Y * 2));
+//            getChildren().add(new_td);
+//            new_td.setTranslateX(new_td.getTable().getX());
+//            new_td.setTranslateY(new_td.getTable().getY());
+//            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClickedEH);
+//        }
         this.restaurantManager = restaurantManager;
 
+    }
+
+    public void addTable(int seat) {
+        if (seat == 2) {
+            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X, OFFSET_Y));
+            getChildren().add(new_td);
+            new_td.setTranslateX(new_td.getTable().getX());
+            new_td.setTranslateY(new_td.getTable().getY());
+        } else if (seat == 4) {
+            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X, OFFSET_Y));
+            getChildren().add(new_td);
+            new_td.setTranslateX(new_td.getTable().getX());
+            new_td.setTranslateY(new_td.getTable().getY());
+        }
     }
 
     /**
@@ -107,6 +123,8 @@ public class LayoutManager extends Pane {
             }
         }
     };
+
+
 
     class MouseOffset {
         double x;

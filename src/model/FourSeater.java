@@ -1,7 +1,7 @@
 package model;
 
 public class FourSeater extends Table {
-    private static final int width = 30;
+    private static final int width = 80;
     private static final int height = 50;
 
     //EFFECTS: constructs a new two seater table with given x and y coordinate
