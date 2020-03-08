@@ -103,7 +103,6 @@ public class ReservationWindow extends Stage {
         setTitle("book yourself");
         setScene(scene);
         show();
-
     }
 
 }
