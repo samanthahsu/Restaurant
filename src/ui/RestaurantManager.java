@@ -2,15 +2,17 @@ package ui;
 
 import Persistence.Reader;
 import Persistence.Savable;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import model.Customer;
 import model.Reservation;
 import model.Table;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 
 public class RestaurantManager implements Savable {
 
@@ -23,7 +25,6 @@ public class RestaurantManager implements Savable {
          for (int i = 0; i < 24; i++) {
              reservations.put(i, new LinkedList<Reservation>());
          }
-         allTables = new ArrayList<>();
     }
 
 //   corresponding table at time is added to the reservations hashmap
@@ -74,6 +75,7 @@ public class RestaurantManager implements Savable {
          allTables.add(table);
     }
 
+  
     @Override
     public void save(PrintWriter printWriter) {
         System.out.println("save run");
