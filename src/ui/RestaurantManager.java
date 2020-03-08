@@ -26,12 +26,16 @@ public class RestaurantManager implements Savable {
 //   corresponding table at time is added to the reservations hashmap
 //    updates ui
     public void addReservation(Integer time, Table table, Customer customer) {
+         Boolean contains = false;
          if (time <= 24) {
              List<Reservation> reservs = reservations.get(time);
              for (Reservation r: reservs) {
-                 if (!r.getTable().equals(table)) {
-                     reservations.get(time).add(new Reservation(table, customer));
+                 if (r.getTable().equals(table)) {
+                     contains = true;
                  }
+             }
+             if (contains.equals(false)) {
+                 reservations.get(time).add(new Reservation(table, customer));
              }
          }
     }
