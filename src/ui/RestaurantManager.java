@@ -57,9 +57,17 @@ public class RestaurantManager implements Savable {
          }
          return null;
     }
+
   
-      @Override
+    @Override
     public void save(PrintWriter printWriter) {
-        printWriter.print(reservations);
+        for (int i = 0; i < reservations.size(); i++) {
+            printWriter.print(reservations.get(i));
+            if (i == reservations.size()-1) {
+                //empty
+            } else {
+                printWriter.print(Reader.DELIMITER);
+            }
+        }
     }
 }
