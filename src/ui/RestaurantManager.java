@@ -5,40 +5,56 @@ import Persistence.Savable;
 import model.Customer;
 import model.Reservation;
 import model.Table;
+import sun.awt.image.ImageWatched;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RestaurantManager implements Savable {
-
-
-    /** integers where 0=12am and list contains tables reserved */
     HashMap<Integer, List<Reservation>> reservations;
 
 //    initialize variable
-    RestaurantManager() {
-        reservations = new HashMap<>();
+     public RestaurantManager() {
+         reservations = new HashMap<>();
+         for (int i = 0; i < 24; i++) {
+             reservations.put(i, new LinkedList<Reservation>());
+         }
     }
 
 //   corresponding table at time is added to the reservations hashmap
 //    updates ui
-    void addReservation(int time, Table table, Customer customer) {
-        List<Reservation> reservs = reservations.get(time);
-        Reservation r = new Reservation(table, customer);
-        reservations.get(time).add(r);
+    public void addReservation(Integer time, Table table, Customer customer) {
+         if (time <= 24) {
+             List<Reservation> reservs = reservations.get(time);
+             for (Reservation r: reservs) {
+                 if (!r.getTable().equals(table)) {
+                     reservations.get(time).add(new Reservation(table, customer));
+                 }
+             }
+         }
     }
 
 //    removes corresponding reservations
 //    updates ui
-    void removeReservation(int time, Table table, Customer customer) {
+    public void removeReservation(Integer time, Table table, Customer customer) {
         List<Reservation> reservs = reservations.get(time);
-        Reservation r = new Reservation(table, customer);
-        reservations.get(time).remove(r);
+        for (Reservation r: reservs) {
+            if (r.getCustomer().equals(customer)) {
+                reservations.get(time).remove(r);
+            }
+        }
     }
 
-
-    @Override
+    public List<Reservation> getReservations(Integer time) {
+         if (time <= 24) {
+             return reservations.get(time);
+         }
+         return null;
+    }
+  
+      @Override
     public void save(PrintWriter printWriter) {
         printWriter.print(reservations);
     }
