@@ -13,34 +13,43 @@ import java.util.List;
 
 public class RestaurantManager {
 
-    /** list of all tables*/
-    List<Table> allTables;
-
-
-    /** integers where 0=12am and list contains tables reserved */
     HashMap<Integer, List<Reservation>> reservations;
-    Pane pane;
 
 //    initialize variable
-    RestaurantManager() {
+     public RestaurantManager() {
         reservations = new HashMap<>();
     }
 
 //   corresponding table at time is added to the reservations hashmap
 //    updates ui
-    void addReservation(int time, Table table, Customer customer) {
-        List<Reservation> reservs = reservations.get(time);
-        Reservation r = new Reservation(table, customer);
-        reservations.get(time).add(r);
+    public void addReservation(Integer time, Table table, Customer customer) {
+         if (time <= 24) {
+             List<Reservation> reservs = reservations.get(time);
+             for (Reservation r: reservs) {
+                 if (!r.getTable().equals(table)) {
+                     reservations.get(time).add(new Reservation(table, customer));
+                 }
+             }
+         }
     }
 
 //    removes corresponding reservations
 //    updates ui
-    void removeReservation(int time, Table table, Customer customer) {
+    public void removeReservation(Integer time, Table table, Customer customer) {
         List<Reservation> reservs = reservations.get(time);
-        Reservation r = new Reservation(table, customer);
-        reservations.get(time).remove(r);
+        for (Reservation r: reservs) {
+            if (r.getCustomer().equals(customer)) {
+                reservations.get(time).remove(r);
+            }
+        }
     }
 
+
+    public List<Reservation> getReservations(Integer time) {
+         if (time <= 24) {
+             return reservations.get(time);
+         }
+         return null;
+    }
 
 }
