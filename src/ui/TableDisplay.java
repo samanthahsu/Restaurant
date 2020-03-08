@@ -1,15 +1,15 @@
 package ui;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Table;
 
-import java.io.Writer;
-
 public class TableDisplay extends Rectangle {
 
-    final static int WIDTH = 100;
-    final static int HEIGHT = 200;
+    final static int WIDTH = 70;
+    final static int HEIGHT = 50;
     boolean reserved;
     Table table;
 
@@ -20,11 +20,6 @@ public class TableDisplay extends Rectangle {
         this.table = table;
     }
 
-//    sets color of the table
-    public void setColor(Color color) {
-        setFill(color);
-    }
-
     public void reserve() {
         setFill(Color.RED);
         this.reserved = true;
@@ -33,5 +28,9 @@ public class TableDisplay extends Rectangle {
     public void free() {
         setFill(Color.GREEN);
         this.reserved = false;
+    }
+
+    public Table getTable() {
+        return table;
     }
 }
