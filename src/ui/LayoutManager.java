@@ -114,7 +114,7 @@ public class LayoutManager extends Pane {
 
             if (node instanceof TableDisplay) {
                 try {
-                    new main.ReservationWindow(displayTime, restaurantManager, (TableDisplay) node);
+                    new ui.ReservationWindow(displayTime, restaurantManager, (TableDisplay) node);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
