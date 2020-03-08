@@ -40,7 +40,7 @@ public class LayoutManager extends Pane {
     }
 
     private void test() {
-        restaurantManager.addReservation(10, ((TableDisplay) getChildren().get(0)), new Customer());
+        restaurantManager.addReservation(10, (TableDisplay) getChildren().get(0), new Customer( "", ""));
     }
 
     /**
@@ -53,18 +53,20 @@ public class LayoutManager extends Pane {
         List<Reservation> currState = restaurantManager.reservations.get(time);
         System.out.println("reservations at time; " + time);
 
-//        for(getC)
+        for(Node node : getChildren()) {
+            TableDisplay tableDisplay = (TableDisplay) node;
+            tableDisplay.free();
+        }
 
         for(Node node : getChildren()) {
             TableDisplay tableDisplay = (TableDisplay) node;
 
             for (Reservation reservation : currState) {
                 if (reservation.getTable() == tableDisplay.getTable()) {
+                    System.out.println("reserved");
                         tableDisplay.reserve();
-                    return;
                 }
             }
-            tableDisplay.free();
         }
     }
 

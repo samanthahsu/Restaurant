@@ -1,11 +1,9 @@
 package ui;
 
-import Persistence.Reader;
 import Persistence.Savable;
 import model.Customer;
 import model.Reservation;
 import model.Table;
-import sun.awt.image.ImageWatched;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -25,19 +23,19 @@ public class RestaurantManager implements Savable {
 
 //   corresponding table at time is added to the reservations hashmap
 //    updates ui
-    public void addReservation(Integer time, Table table, Customer customer) {
+    public void addReservation(Integer time, TableDisplay tableDisplay, Customer customer) {
          Boolean contains = false;
          if (time < 24) {
              List<Reservation> reservs = reservations.get(time);
              if (!reservs.isEmpty()) {
                  for (Reservation r : reservs) {
-                     if (r.getTable().equals(table)) {
+                     if (r.getTable().equals(tableDisplay)) {
                          contains = true;
                      }
                  }
              }
              if (contains.equals(false)) {
-                 reservations.get(time).add(new Reservation(table, customer));
+                 reservations.get(time).add(new Reservation(tableDisplay.getTable(), customer));
              }
          }
     }
