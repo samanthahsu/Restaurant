@@ -1,14 +1,12 @@
 package ui;
 
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.util.Pair;
-import model.Customer;
-import model.Table;
+import model.FourSeater;
+import model.Reservation;
+import model.TwoSeater;
 
 import java.util.List;
 
@@ -23,10 +21,15 @@ public class LayoutManager extends Pane {
 
 //    populates pane with 12 tables at set layout places
     LayoutManager(RestaurantManager restaurantManager) {
-        for (int i = 0; i < 12; i++) {
-            TableDisplay new_td = new TableDisplay(new Table());
+        for (int i = 0; i < 6; i++) {
+            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X * i, 0));
             getChildren().add(new_td);
-//            todo if statement to make second row of table
+            new_td.setTranslateX(100 * i);
+            new_td.setTranslateY(0);
+        }
+        for (int i = 0; i < 6; i++) {
+            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X * i, OFFSET_Y));
+            getChildren().add(new_td);
             new_td.setTranslateX(100 * i);
             new_td.setTranslateY(0);
         }
@@ -42,21 +45,22 @@ public class LayoutManager extends Pane {
     public void displayAtTime(int time) {
         for(Node node : getChildren()) {
             TableDisplay tableDisplay = (TableDisplay) node;
-            List<Pair<Customer, Table>> currState = restaurantManager.reservations.get(time);
-            for (Pair<Customer, Table> reservation : currState) {
-                if (reservation.getValue() == tableDisplay.table) {
-                    if (reservation.getValue() == null) {
-                        tableDisplay.setColor(Color.GREEN);
+            List<Reservation> currState = restaurantManager.reservations.get(time);
+
+            for (Reservation reservation : currState) {
+                if (reservation.getTable() == tableDisplay.table) {
+                    if (reservation.getCustomer() == null) {
+                        tableDisplay.free();
                     } else {
-                        tableDisplay.setColor(Color.RED);
+                        tableDisplay.reserve();
                     }
+                    break;
                 }
             }
         }
     }
 
     private EventHandler<MouseEvent> onMouseClickedEH = new EventHandler<MouseEvent>() {
-
         public void handle(MouseEvent event) {
             Node node = (Node) event.getSource();
             if (node instanceof TableDisplay) {
@@ -64,6 +68,5 @@ public class LayoutManager extends Pane {
             }
         }
     };
-
 
 }
