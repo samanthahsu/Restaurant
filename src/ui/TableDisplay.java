@@ -19,12 +19,12 @@ public class TableDisplay extends Rectangle {
     }
 
     public void reserve() {
-        setFill(Color.RED);
+        setFill(Color.DARKRED);
         this.reserved = true;
     }
 
     public void free() {
-        setFill(Color.GREEN);
+        setFill(Color.LIGHTSEAGREEN);
         this.reserved = false;
     }
 

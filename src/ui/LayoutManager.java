@@ -3,10 +3,12 @@ package ui;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.FourSeater;
 import model.Reservation;
+import model.Table;
 import model.TwoSeater;
 
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class LayoutManager extends Pane {
     boolean isOwner;
     MouseOffset mouseOffset;
     RestaurantManager restaurantManager;
+    TableDisplay new_td;
 
 //    populates pane with 12 tables at set layout places
     LayoutManager(RestaurantManager restaurantManager) {
@@ -47,30 +50,25 @@ public class LayoutManager extends Pane {
 
     public void addTable(int seat) {
         if (seat == 2) {
-            TableDisplay new_td = new TableDisplay(new TwoSeater(OFFSET_X, OFFSET_Y));
+            new_td = new TableDisplay(new TwoSeater(OFFSET_X, OFFSET_Y));
             getChildren().add(new_td);
             new_td.setTranslateX(new_td.getTable().getX());
             new_td.setTranslateY(new_td.getTable().getY());
-
-            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
-            new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
-            new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
-            restaurantManager.addTable(new_td.getTable());
-
         } else if (seat == 4) {
-            TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X, OFFSET_Y));
+            new_td = new TableDisplay(new FourSeater(OFFSET_X, OFFSET_Y));
             getChildren().add(new_td);
             new_td.setTranslateX(new_td.getTable().getX());
             new_td.setTranslateY(new_td.getTable().getY());
 
-            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
-            new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
-            new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
-            restaurantManager.addTable(new_td.getTable());
         }
+        new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
+        new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
+        new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+        restaurantManager.addTable(new_td.getTable());
 
         System.out.println(restaurantManager.allTables.size());
     }
+
 
     /**
  * @param time
@@ -108,10 +106,9 @@ public class LayoutManager extends Pane {
 
     private EventHandler<MouseEvent> onMouseClicked = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent event) {
-            if(isOwner) return;
             Node node = (Node) event.getSource();
             System.out.println(node);
-
+            if(isOwner) { return; }
             if (node instanceof TableDisplay) {
                 try {
                     new ui.ReservationWindow(displayTime, restaurantManager, (TableDisplay) node);
@@ -122,6 +119,12 @@ public class LayoutManager extends Pane {
             } else {
                 System.out.println("Clicker something else");
             }
+        }
+    };
+
+    private EventHandler<MouseEvent> onRightClicked = new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent event) {
+            if (!isOwner) return;
         }
     };
 
