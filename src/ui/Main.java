@@ -25,19 +25,19 @@ public class Main extends Application {
         primaryStage.setTitle("Select Option");
         BorderPane root = new BorderPane();
         options = new HBox();
-        FileInputStream input = new FileInputStream("111.jfif");
-        Image img = new Image(input);
-        BackgroundImage backgroundimage = new BackgroundImage(image,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-
-        // create Background
-        Background background = new Background(backgroundimage);
-
-        // set background
-        options.setBackground(background);
+//        FileInputStream input = new FileInputStream("111.jfif");
+//        Image img = new Image(input);
+//        BackgroundImage backgroundimage = new BackgroundImage(image,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundPosition.DEFAULT,
+//                BackgroundSize.DEFAULT);
+//
+//        // create Background
+//        Background background = new Background(backgroundimage);
+//
+//        // set background
+//        options.setBackground(background);
 
         MenuBar menuBar = new MenuBar();
         initMenuBar(menuBar);
