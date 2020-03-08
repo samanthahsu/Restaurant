@@ -5,10 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.*;
+import model.FourSeater;
+import model.Reservation;
+import model.TwoSeater;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**main pane that displays all the tables
@@ -51,17 +52,24 @@ public class LayoutManager extends Pane {
             new_td.setTranslateX(new_td.getTable().getX());
             new_td.setTranslateY(new_td.getTable().getY());
 
+            new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
+            new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
+            new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+            restaurantManager.addTable(new_td.getTable());
+
         } else if (seat == 4) {
             TableDisplay new_td = new TableDisplay(new FourSeater(OFFSET_X, OFFSET_Y));
             getChildren().add(new_td);
             new_td.setTranslateX(new_td.getTable().getX());
             new_td.setTranslateY(new_td.getTable().getY());
 
-
             new_td.addEventFilter(MouseEvent.MOUSE_CLICKED, onMouseClicked);
             new_td.addEventFilter(MouseEvent.MOUSE_PRESSED, onMousePressed);
             new_td.addEventFilter(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+            restaurantManager.addTable(new_td.getTable());
         }
+
+        System.out.println(restaurantManager.allTables.size());
     }
 
     /**

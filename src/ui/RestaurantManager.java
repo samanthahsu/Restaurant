@@ -1,10 +1,12 @@
 package ui;
 
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import model.Customer;
 import model.Reservation;
 import model.Table;
+
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +17,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
 
 public class RestaurantManager implements Serializable {
 
@@ -28,6 +29,7 @@ public class RestaurantManager implements Serializable {
          for (int i = 0; i < 24; i++) {
              reservations.put(i, new LinkedList<Reservation>());
          }
+         allTables = new ArrayList<>();
     }
 
 //   corresponding table at time is added to the reservations hashmap
@@ -77,6 +79,7 @@ public class RestaurantManager implements Serializable {
     public void addTable(Table table) {
          allTables.add(table);
     }
+
 
     public static void save(Serializable RestaurantManager, String fileName) {
          try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName)))) {
