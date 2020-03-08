@@ -8,14 +8,12 @@ import model.Table;
 
 public class TableDisplay extends Rectangle {
 
-    final static int WIDTH = 70;
-    final static int HEIGHT = 50;
     boolean reserved;
     Table table;
 
     TableDisplay(Table table) {
-        setWidth(WIDTH);
-        setHeight(HEIGHT);
+        setWidth(table.getWidth());
+        setHeight(table.getHeight());
         free();
         this.table = table;
     }
