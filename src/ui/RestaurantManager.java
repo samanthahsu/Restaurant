@@ -1,20 +1,23 @@
 package ui;
 
-import Persistence.Reader;
-import Persistence.Savable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import model.Customer;
 import model.Reservation;
 import model.Table;
 
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
-public class RestaurantManager implements Savable {
+public class RestaurantManager implements Serializable {
 
     List<Table> allTables;
     HashMap<Integer, List<Reservation>> reservations;
@@ -75,25 +78,45 @@ public class RestaurantManager implements Savable {
          allTables.add(table);
     }
 
-  
-    @Override
-    public void save(PrintWriter printWriter) {
-        System.out.println("save run");
-        for (int i = 0; i < reservations.size(); i++) {
-            List<Reservation> reservationList = reservations.get(i);
-            for (int n = 0; n < reservationList.size(); i++) {
-                printWriter.print(reservationList.get(i));
-                if (i == reservationList.size()-1) {
-                    //empty
-                } else {
-                    printWriter.print(Reader.DELIMITER1);
-                }
-            }
-            if (i == reservations.size() - 1) {
-                //empty
-            } else {
-                printWriter.print(Reader.DELIMITER2);
-            }
-        }
+    public static void save(Serializable RestaurantManager, String fileName) {
+         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName)))) {
+             oos.writeObject(RestaurantManager);
+         } catch (IOException e) {
+             System.out.println("IOException caught");
+         }
     }
+
+    public static RestaurantManager load(String fileName) {
+         try {
+             ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(fileName)));
+             return (RestaurantManager) ois.readObject();
+         } catch (IOException e) {
+             System.out.println("IOException caught");
+             return null;
+         } catch (ClassNotFoundException e) {
+             System.out.println("ClassNotFoundException caught");
+             return null;
+         }
+    }
+  
+//    @Override
+//    public void save(PrintWriter printWriter) {
+//        System.out.println("save run");
+//        for (int i = 0; i < reservations.size(); i++) {
+//            List<Reservation> reservationList = reservations.get(i);
+//            for (int n = 0; n < reservationList.size(); i++) {
+//                printWriter.print(reservationList.get(i));
+//                if (i == reservationList.size()-1) {
+//                    //empty
+//                } else {
+//                    printWriter.print(Reader.DELIMITER1);
+//                }
+//            }
+//            if (i == reservations.size() - 1) {
+//                //empty
+//            } else {
+//                printWriter.print(Reader.DELIMITER2);
+//            }
+//        }
+//    }
 }
