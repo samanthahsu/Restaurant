@@ -1,6 +1,7 @@
 package ui;
 
 import Persistence.Reader;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class OwnerStage extends Stage {
     Button addTable;
 
     public OwnerStage() {
+        super();
         BorderPane root = new BorderPane();
         setTitle("Restaurant Layout");
         lm = new LayoutManager(rm);
@@ -40,6 +43,13 @@ public class OwnerStage extends Stage {
 
         setScene(new Scene(root, 1000, 800));
         show();
+
+        setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+            }
+        });
     }
 
     private void initMenuBar(MenuBar menuBar) {
@@ -53,6 +63,7 @@ public class OwnerStage extends Stage {
             Reader reader = new Reader();
             try {
                 rm = Reader.readRestaurantManager(new File(System.getProperty("user.dir") + "\\src\\save"));
+                System.out.println(rm);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,6 +71,9 @@ public class OwnerStage extends Stage {
 
 
         MenuItem menuItemSave = new MenuItem("Save...");
+        menuItemSave.setOnAction(event -> {
+
+        });
         MenuItem menuItemSaveAs = new MenuItem("Save As...");
         fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
         menuBar.getMenus().addAll(fileMenu);

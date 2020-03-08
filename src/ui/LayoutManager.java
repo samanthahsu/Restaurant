@@ -39,13 +39,6 @@ public class LayoutManager extends Pane {
         }
         this.restaurantManager = restaurantManager;
 
-        test();
-
-    }
-
-    private void test() {
-        restaurantManager.addReservation(10, (TableDisplay) getChildren().get(0), new Customer( "", ""));
-        restaurantManager.addReservation(10, (TableDisplay) getChildren().get(5), new Customer( "", ""));
     }
 
     /**

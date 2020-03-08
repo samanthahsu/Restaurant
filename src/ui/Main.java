@@ -1,23 +1,18 @@
 package ui;
 
-import Persistence.Reader;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 public class Main extends Application {
     HBox options;
@@ -62,13 +57,14 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent event) {
                 new CustomerStage();
+                primaryStage.hide();
             }
         });
-
         owner.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 new OwnerStage();
+                primaryStage.hide();
             }
         });
 
@@ -78,9 +74,14 @@ public class Main extends Application {
 
         primaryStage.show();
 
-    }
+//        closes all offending windows when main window is closed
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+            }
+        });
 
-    private void initData() {
     }
 
     public static void main(String[] args) {
