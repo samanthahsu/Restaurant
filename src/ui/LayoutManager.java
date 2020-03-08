@@ -77,6 +77,7 @@ public class LayoutManager extends Pane {
         isOwner = owner;
     }
 
+
     private EventHandler<MouseEvent> onMouseClicked = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent event) {
             if(isOwner) return;
