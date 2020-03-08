@@ -32,13 +32,11 @@ public class Main extends Application {
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
+                    new BackgroundSize(1.0, 1.0, true, true, false, false));
             // create Background
             Background background = new Background(backgroundimage);
-
             // set background
-            options.setBackground(background);
-            options.setStyle("-fx-background-size: 1024 768");
+            root.setBackground(background);
 
 
 

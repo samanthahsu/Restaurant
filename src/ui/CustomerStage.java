@@ -24,7 +24,8 @@ public class CustomerStage extends Stage {
         for (int i = 0; i < 24; i++) {
             times.add(i);
         }
-        listOfTimes.setPrefSize(100,275);
+        listOfTimes.setPrefSize(200,800);
+        listOfTimes.setStyle("-fx-font-size: x-large");
         listOfTimes.setItems(times);
 
         restaurantManager = RestaurantManager.load("yes");
