@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,7 +128,9 @@ public class OwnerStage extends Stage {
             try {
                 StackPane root = new StackPane();
                 TableView table = new TableView();
-                table.setItems((ObservableList) rm.reservations);
+                List list = new ArrayList();
+                list.add(rm.reservations);
+                table.setItems((ObservableList)list );
                 root.getChildren().add(table);
                 Scene scene = new Scene(root, 300, 250);
                 setTitle("Details");
