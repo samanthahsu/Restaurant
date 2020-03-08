@@ -24,7 +24,6 @@ public class Main extends Application {
     Button customer;
     Button owner;
     Stage mainStage;
-    RestaurantManager restaurantManager;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -46,8 +45,6 @@ public class Main extends Application {
             options.setBackground(background);
             options.setStyle("-fx-background-size: 1024 768");
 
-        MenuBar menuBar = new MenuBar();
-        initMenuBar(menuBar);
 
 
         customer = new Button("Customer");
@@ -76,7 +73,6 @@ public class Main extends Application {
         });
 
         root.setCenter(options);
-        root.setTop(menuBar);
 
         primaryStage.setScene(new Scene(root, 1000, 800));
 
@@ -87,28 +83,6 @@ public class Main extends Application {
     private void initData() {
     }
 
-    private void initMenuBar(MenuBar menuBar) {
-        Menu fileMenu = new Menu("File");
-        MenuItem menuItemNew = new MenuItem("New...");
-        menuItemNew.setOnAction(event -> {
-
-        });
-        MenuItem menuItemOpen = new MenuItem("Open...");
-        menuItemOpen.setOnAction(event -> {
-            Reader reader = new Reader();
-            try {
-                restaurantManager = Reader.readRestaurantManager(new File(System.getProperty("user.dir") + "\\src\\save"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-
-        MenuItem menuItemSave = new MenuItem("Save...");
-        MenuItem menuItemSaveAs = new MenuItem("Save As...");
-        fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
-        menuBar.getMenus().addAll(fileMenu);
-    }
     public static void main(String[] args) {
         launch(args);
     }
