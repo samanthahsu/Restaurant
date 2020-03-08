@@ -15,7 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
+import model.Customer;
+import ui.ReservationWindow;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -94,6 +95,17 @@ public class OwnerStage extends Stage {
         MenuItem menuItemSaveAs = new MenuItem("Save As...");
         fileMenu.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemSaveAs);
         menuBar.getMenus().addAll(fileMenu);
+        
+        MenuItem viewInfo = new MenuItem("View Info...");
+        viewInfo.setOnAction(event -> {
+            try {
+            ReservationWindow r;
+            Customer c;
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        )
     }
 
 }

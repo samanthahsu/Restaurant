@@ -1,11 +1,12 @@
 package ui;
 
+import java.beans.EventHandler;
+
+import javax.swing.text.html.ListView;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
